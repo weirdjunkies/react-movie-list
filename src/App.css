@@ -1,38 +1,88 @@
-.App {
-  text-align: center;
+.movieListRoot {
+    width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.searchContainer {
+    padding: 24px;
+    display: flex;
+    justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.inputSearchFullWidth {
+    width: 350px;
+}
+
+.movieListResultContainer {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.itemResultContainer {
+    margin: 8px 0px;
+}
+
+.posterMovieListResult {
+    height: 112px;
+    width: auto;
+    object-fit: cover;
+}
+
+.posterMovieListResult:hover {
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1300;
+}
+
+.moodalContent {
+    padding: 24px;
+}
+
+.no-suggestions {
+    color: #999;
+    padding: 0.5rem;
+    position: absolute;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  .suggestions {
+    border: 1px solid #999;
+    border-top-width: 0;
+    list-style: none;
+    margin-top: 0;
+    max-height: 143px;
+    overflow-y: auto;
+    padding-left: 0;
+    width: 350px;
+    background-color: white;
+    position: absolute;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .suggestions li {
+    padding: 0.5rem;
   }
-}
+  
+  .suggestion-active,
+  .suggestions li:hover {
+    background-color: #008f68;
+    color: #fae042;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  
+  .suggestions li:not(:last-of-type) {
+    border-bottom: 1px solid #999;
+  }

@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# StockMovie App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+a movie finder app connected to OMDb API.
 
-## Available Scripts
+For Bibit / Stockbit Lead React Developer Test - Test 2: Simple Movie Finder App
 
-In the project directory, you can run:
+### Built With
 
-### `yarn start`
+- [Create React App](https://github.com/facebook/create-react-app).
+- [Bootstrap 5](https://getbootstrap.com) + [SASS](https://sass-lang.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Redux Saga](https://redux-saga.js.org/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+These instructions will get you a copy of the project up and running on your local machine
 
-### `yarn test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Make sure you have installed all of the following prerequisites on your local machine:
 
-### `yarn build`
+- Git - [Download & Install Git](https://git-scm.com/downloads). OSX and Linux machines typically have this already installed.
+- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repo
+   ```sh
+   git clone https://github.com/hendra-foo/stock-movie-app.git
+   ```
+2. Move to repo root directory
+   ```sh
+   cd stock-movie-app
+   ```
+3. Install NPM packages, this command is similar to `npm install` [read more here](https://docs.npmjs.com/cli/v7/commands/npm-ci)
+   ```sh
+   npm ci
+   ```
+4. Run in Development mode
+   ```sh
+   npm start
+   ```
+5. You can now view **stock-movie-app** in the browser by going to [http://localhost:3000](http://localhost:3000)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Testing Your Application
 
-### `yarn eject`
+The test only cover reusable Components and Hooks. You can run the test with:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```sh
+npm test
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Mega Search
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You can try search a movie by clicking the **Search Button** on the top right and type the title, the button icon can changing depends on the state, if the Mega Search is closed, it will show **Search** icon, while searching movie will show **Dot Loading** icon, and the last when the Mega Search is opened, it will show a **Close** icon.
 
-## Learn More
+For better UX Experience, we don't clear your last search after you close the Mega Search. We also **debounce** and **limit** your search result everytime the search keyword change, so the result will keep under control and you can load more result by **Scrolling to the bottom** of the list.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Big Poster
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Click on the poster will show a Full Big Poster to your Screen
 
-### Code Splitting
+#### Fully Responsive
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Our app also work on all screensize
 
-### Analyzing the Bundle Size
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Hendra - [+6283284327733](https://wa.me/6283184327733) - fu.ceyong18@gmail.com
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project Link: [https://github.com/hendra-foo/stock-movie-app](https://github.com/hendra-foo/stock-movie-app)
