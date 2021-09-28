@@ -1,4 +1,4 @@
-# Movie App
+# Searching Movie App
 
 a movie finder app connected to OMDb API.
 
