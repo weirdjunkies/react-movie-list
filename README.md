@@ -6,7 +6,7 @@ For Bibit / Stockbit React.js Developer Test
 
 ### Built With
 
-- [Create React App](https://github.com/facebook/create-react-app).
+- [Create React App](https://reactjs.org/).
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Axios](https://axios-http.com/)
 - [React Router Dom](https://reactrouter.com/)
