@@ -16,6 +16,7 @@ const MovieList = (props) => {
         isLoading,
         isError,
         hasMore,
+        totalResults,
     } = useSelector(selectStateMovie);
 
     const [showImage, setShowImage] = useState({
@@ -36,7 +37,9 @@ const MovieList = (props) => {
     }
 
     const fetchData = useCallback((page) => {
-        if(searchValue === undefined) {window.alert("undefined"); return}
+        if ([null, undefined, ""].includes(searchValue)) {
+            return
+        }
         dispatch(fetchSearchMovie({
             searchValue,
             page
@@ -67,20 +70,27 @@ const MovieList = (props) => {
             <PopUpDialog open={showImage.open} onClose={closeDialog}>
                 <img src={showImage.src} alt={"poster"}/>
             </PopUpDialog>
+            <h1 style={{textAlign: 'center'}}>React Movie</h1>
+
             <div className="searchContainer">
                 <AutoComplete/>
                 <button onClick={onClickBtnSearch}>Search</button>
             </div>
+
+            {totalResults !== null && <><label>Total Result&nbsp;:&nbsp;</label><b>{totalResults}</b></>}
+
             <div className="movieListResultContainer">
                 {
                     searchResult.map((movie, index) => {
                         return (
                             <div key={movie.imdbID} className="itemResultContainer">
-                                <img className="posterMovieListResult" onClick={openDialog(movie.Poster)} src={movie.Poster} alt={movie.Title}/>
-                                
-                                    <h4 style={{margin: 0}}>
-                                    <Link to={`/Detail/${movie.imdbID}`}>{movie.Title}</Link></h4>
-                                    <span style={{color: '#949494'}}>{movie.Year}</span>
+                                <div className="posterContainer">
+                                    <img className="posterMovieListResult" onClick={openDialog(movie.Poster)} src={movie.Poster} alt={movie.Title}/>
+                                </div>
+                                <h4 style={{margin: "6px 0px 4px"}}>
+                                    <Link className="linkTitle" to={`/Detail/${movie.imdbID}`}>{movie.Title}</Link>
+                                </h4>
+                                <span style={{color: '#949494'}}>{movie.Year}</span>
                             </div>
                         )
                     })

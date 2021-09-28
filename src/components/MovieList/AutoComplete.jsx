@@ -12,9 +12,8 @@ const AutoComplete = (props) => {
     } = useSelector(selectStateAutcomplete);
 
     const wrapperRef = React.useRef(null);
+    // let timer = null;
     const {searchValue} = useSelector(selectStateMovie);
-
-    let timer = null;
 
     const closeSuggestion = () => {
         dispatch(setAutocompleteState({
@@ -23,47 +22,54 @@ const AutoComplete = (props) => {
         }));
     }
 
+    // Show suggestion every time value in input changed
+    const onChange = e => {
+        // clearTimeout(timer);
+        // timer = setTimeout(() => {
+        const value = e.target.value;
+        dispatch(setSearchValue(value));
+        if(!value) {
+            dispatch(setAutocompleteState({
+                activeSuggestion: 0,
+                filteredSuggestions: [],
+                showSuggestions: false,
+            }))
+            return;
+        }
+        dispatch(fetchSuggestionMovie(value));
+        // }, 1000)
+    }
+
+    // Show suggestion everytim input clicked
     const onClickInput = (e) => {
         dispatch(setAutocompleteState({
             showSuggestions: true,
         }))
     }
 
-    const onChange = e => {
-        clearTimeout(timer);
-        timer = null;
-        const value = e.target.value;
-        dispatch(setSearchValue(value));
-
-        timer = setTimeout(() => {
-            // if(!value) {
-            //     dispatch(setAutocompleteState({
-            //         activeSuggestion: 0,
-            //         filteredSuggestions: [],
-            //         showSuggestions: false,
-            //     }))
-            //     return;
-            // }
-            // dispatch(fetchSuggestionMovie(value));
-            window.alert("ok")
-        }, 2000);
-    }
-
+    // Handle keyboard event when user press down, up, esc, and enter
     const onKeyDown = (e) => {
         if(e.keyCode === 13) {
-            const tempSearchValue = (activeSuggestion)? filteredSuggestions[activeSuggestion - 1] : searchValue;
+            const tempSearchValue = (activeSuggestion < 0 || activeSuggestion > filteredSuggestions.length) ? searchValue : filteredSuggestions[activeSuggestion];
             dispatch(setSearchValue(tempSearchValue));
-            dispatch(fetchSearchMovie({searchValue: tempSearchValue, page: 1}));
+            if(![null,undefined,""].includes(tempSearchValue))
+                dispatch(fetchSearchMovie({searchValue: tempSearchValue, page: 1}));
             closeSuggestion();
         } else if (e.keyCode === 38) {
-            if(activeSuggestion === 0) {
+            if (activeSuggestion === 0) {
                 return;
             }
             dispatch(setAutocompleteState({
                 activeSuggestion: activeSuggestion - 1
             }))
         } else if (e.keyCode === 40) {
-            if (activeSuggestion - 1 === filteredSuggestions.length) {
+            if (showSuggestions === false) {
+                // show suggestion if down keyboard pressed
+                dispatch(setAutocompleteState({
+                    showSuggestions: true
+                }))
+            }
+            if (activeSuggestion + 1 === filteredSuggestions.length) {
                 return;
             }
             dispatch(setAutocompleteState({
@@ -74,6 +80,7 @@ const AutoComplete = (props) => {
         }
     }
 
+    // handle if click outside component => close suggestion
     useEffect(() => {
         function handleClickOutside (event) {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -89,7 +96,8 @@ const AutoComplete = (props) => {
 
     const onSuggestionClick = (value) => () => {
         dispatch(setSearchValue(value));
-        dispatch(fetchSearchMovie({searchValue: value, page: 1}));
+        if (![null,undefined,""].includes(value))
+            dispatch(fetchSearchMovie({searchValue: value, page: 1}));
         closeSuggestion();
     }
 
@@ -99,15 +107,15 @@ const AutoComplete = (props) => {
              value={searchValue}
              onChange={onChange}
              onKeyDown={onKeyDown}
-             type="text"
+            //  type="text"
              className="inputSearchFullWidth"
              onClick={onClickInput}
-             placeholder="Type something here"
+             placeholder="Type here to search"
             />
             {(showSuggestions && filteredSuggestions.length > 0) && <ul className="suggestions">
                 {filteredSuggestions.map((suggest, index) => {
                     let className;
-                    if (index+1 === activeSuggestion) className = "suggestion-active";
+                    if (index === activeSuggestion) className = "suggestion-active";
                     return (
                         <li className={className} key={suggest+index} onClick={onSuggestionClick(suggest)}>
                             {suggest}

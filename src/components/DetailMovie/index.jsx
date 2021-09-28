@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter, useParams, Link } from 'react-router-dom';
 import { fetchDetailMovie, selectStateMovie } from '../../reducers/movieReducers';
 import "./style.css";
-
+import {FaClock, FaStar} from 'react-icons/fa';
+import {MdDateRange} from 'react-icons/md'
 
 const DetailMovie = (props) => {
     const {imdbID} = useParams();
     const dispatch = useDispatch();
 
-    const {detailMovie} = useSelector(selectStateMovie);
+    const {detailMovie, detailErrorMsg, detailIsLoading} = useSelector(selectStateMovie);
 
     const {
         Title,
@@ -31,14 +32,18 @@ const DetailMovie = (props) => {
 
     return (
         <div>
+            {detailIsLoading && <h3>Loading...</h3>}
+            {detailErrorMsg && <h2 style={{color: 'red'}}>{detailErrorMsg}</h2>}
             <div className="detailTitleWrapper">
-                <h3><Link to="">Back</Link></h3>
+                <Link to="">
+                    <button className="btnBack" type="button">Back</button>
+                </Link>
                 <h1 style={{margin:0}}>{Title}</h1>
                 <div className="subtitleBlock">
                     <div className="subtitle">
-                        <div>*{Year}</div>&nbsp;
-                        <div>*{Rated}</div>&nbsp;
-                        <div>*{Runtime}</div>
+                        <div className="subtitleItem"><MdDateRange/>{Year}</div>&nbsp;
+                        <div className="subtitleItem"><span><FaStar/></span>{Rated}</div>&nbsp;
+                        <div className="subtitleItem"><span><FaClock/></span>{Runtime}</div>
                     </div>
                 </div>
 

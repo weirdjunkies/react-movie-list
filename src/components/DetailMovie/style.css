@@ -12,11 +12,16 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 12px;
 }
 
 .subtitle {
     display: inline-flex;
     flex-wrap: wrap;
+}
+
+.subtitleItem {
+    display: inline-flex;
 }
 
 .chip{
@@ -57,3 +62,18 @@ p {
 .roleContainer {
     display: block;
 }
+
+.btnBack {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  .btnBack:hover {
+    background-color: RoyalBlue;
+  }

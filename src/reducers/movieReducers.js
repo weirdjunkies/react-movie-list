@@ -6,12 +6,14 @@ const initialState = {
     searchValue: '',
     hasMore: false,
     page: 0,
+    totalResults: null,
     isLoading: false,
     isError: '',
     detailMovie: {},
+    detailErrorMsg: "",
     detailIsLoading: false,
     autocomplete: {
-        activeSuggestion: 0,
+        activeSuggestion: -1,
         filteredSuggestions: [],
         showSuggestions: false,
     }
@@ -22,7 +24,7 @@ export const fetchSuggestionMovie = createAsyncThunk(`movie/fetchSuggestionMovie
 )
 
 export const fetchSearchMovie = createAsyncThunk(`movie/fetchSearchMovie`,
-    (data) => axios.get(`http://www.omdbapi.com/?apikey=faf7e5bb&s=${data.searchValue}&page=${data.page}`)
+    (data) => axios.get(`http://www.omdbapi.com/?apikey=faf7e5bb&s=${data.searchValue? data.searchValue : ""}&page=${data.page}`)
 )
 
 export const fetchDetailMovie = createAsyncThunk(`movie/fetchDetailMovie`,
@@ -63,8 +65,10 @@ const movieSlice = createSlice({
 
             // jika page satu jangan di append, tapi di ganti
             if (action.meta.arg.page === 1) newSearchResult = result
+            // data di append
             else newSearchResult = [...current(state.searchResult), ...result];
             state.isLoading = false;
+            state.totalResults = response.totalResults;
             state.searchResult = newSearchResult;
             if (newSearchResult.length < response.totalResults) {
                 state.hasMore = true;
@@ -73,14 +77,13 @@ const movieSlice = createSlice({
                 state.hasMore = false;
             }
             state.autocomplete = {
-                activeSuggestion: 0,
+                activeSuggestion: -1,
                 filteredSuggestions: state.autocomplete.filteredSuggestions,
                 showSuggestions: false,
             }
         })
         .addCase(fetchSearchMovie.rejected, (state, action) => {
             state.searchResult = [];
-            state.searchValue = '';
             state.hasMore = true;
             state.page = 1;
             state.isLoading = false;
@@ -94,10 +97,14 @@ const movieSlice = createSlice({
             state.detailIsLoading = false;
             state.detailMovie = action.payload.data;
         })
+        .addCase(fetchDetailMovie.rejected, (state, action) => {
+            state.detailIsLoading = false;
+            state.detailErrorMsg = action.error.message;
+        })
         .addCase(fetchSuggestionMovie.pending, (state, action) => {
             if(!action.meta.arg)
             state.autocomplete = {
-                activeSuggestion: 0,
+                activeSuggestion: -1,
                 showSuggestions: false,
                 filteredSuggestions: []
             };
@@ -105,7 +112,7 @@ const movieSlice = createSlice({
         .addCase(fetchSuggestionMovie.fulfilled, (state, action) => {
             if(action.payload.data.Response === "True") {
                 state.autocomplete = {
-                    activeSuggestion: 0,
+                    activeSuggestion: -1,
                     filteredSuggestions: action.payload.data.Search.map((a) => a.Title),
                     showSuggestions: true,
                 }
