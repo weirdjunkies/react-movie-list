@@ -14,6 +14,8 @@ const AutoComplete = (props) => {
     const wrapperRef = React.useRef(null);
     const {searchValue} = useSelector(selectStateMovie);
 
+    let timer = null;
+
     const closeSuggestion = () => {
         dispatch(setAutocompleteState({
             activeSuggestion:0,
@@ -28,17 +30,23 @@ const AutoComplete = (props) => {
     }
 
     const onChange = e => {
+        clearTimeout(timer);
+        timer = null;
         const value = e.target.value;
-        if(!value) {
-            dispatch(setAutocompleteState({
-                activeSuggestion: 0,
-                filteredSuggestions: [],
-                showSuggestions: false,
-            }))
-            return;
-        }
-        dispatch(fetchSuggestionMovie(value));
         dispatch(setSearchValue(value));
+
+        timer = setTimeout(() => {
+            // if(!value) {
+            //     dispatch(setAutocompleteState({
+            //         activeSuggestion: 0,
+            //         filteredSuggestions: [],
+            //         showSuggestions: false,
+            //     }))
+            //     return;
+            // }
+            // dispatch(fetchSuggestionMovie(value));
+            window.alert("ok")
+        }, 2000);
     }
 
     const onKeyDown = (e) => {
