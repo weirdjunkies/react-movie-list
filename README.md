@@ -44,9 +44,9 @@ Make sure you have installed all of the following prerequisites on your local ma
 
 ## Usage
 
-#### Mega Search
+#### Infinite Scroll
 
-You can try search a movie by clicking the **Search Button** on the top right and type the title on searching field.
+You can try search a movie by clicking the **Search Button** on the top and type the title inside searching field.
 
 While typing **title** of the movie, some autocomplete dropdown will appear.
 
